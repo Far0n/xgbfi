@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="XgbFeatureInteractions.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="XgbModelFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">xgb.model</Value>
+    </Setting>
+    <Setting Name="OutputXlsxFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">XgbFeatureInteractions.xlsx</Value>
+    </Setting>
+    <Setting Name="TopK" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="MaxDeepening" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="MaxTrees" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="MaxInteractionDepth" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="SortBy" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Gain</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
