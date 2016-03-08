@@ -19,6 +19,9 @@ namespace XgbFeatureInteractions
         public double ExpectedGain { get; set; }
         public double TreeIndex { get; set; }
         public double AverageTreeIndex { get; set; }
+        public double TreeDepth { get; set; }
+        public double AverageTreeDepth { get; set; }
+        public SplitValueHistogram SplitValueHistogram { get; set; }
 
         public bool HasLeafStatistics { get; set; }
         public double SumLeafValuesLeft { get; set; }
@@ -26,8 +29,9 @@ namespace XgbFeatureInteractions
         public double SumLeafValuesRight { get; set; }
         public double SumLeafCoversRight { get; set; }
 
-        public FeatureInteraction(HashSet<XgbTreeNode> interaction, double gain, double cover, double pathProbability, double treeIndex, double fScore = 1)
+        public FeatureInteraction(HashSet<XgbTreeNode> interaction, double gain, double cover, double pathProbability, double depth, double treeIndex, double fScore = 1)
         {
+            SplitValueHistogram = new SplitValueHistogram();
             List<string> features = interaction.OrderBy(x => x.Feature).Select(y => y.Feature).ToList();
 
             Name = string.Join("|", features);
@@ -40,8 +44,15 @@ namespace XgbFeatureInteractions
             AverageGain = Gain / FScore;
             ExpectedGain = Gain * pathProbability;
             TreeIndex = treeIndex;
+            TreeDepth = depth;
             AverageTreeIndex = TreeIndex / FScore;
+            AverageTreeDepth = TreeDepth / FScore;
             HasLeafStatistics = false;
+
+            if (Depth == 0)
+            {
+                SplitValueHistogram.AddValue(interaction.First().SplitValue);
+            }
         }
         
         public int CompareTo(object obj)

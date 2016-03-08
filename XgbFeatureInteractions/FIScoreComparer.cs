@@ -43,19 +43,19 @@ namespace XgbFeatureInteractions
                 return;
             }
 
-            if (sortBy == "wfscoreavg")
+            if (sortBy == "avgwfscore")
             {
                 SetComparer(SortingMetric.AverageFScoreWeighted);
                 return;
             }
 
-            if (sortBy == "gainavg")
+            if (sortBy == "avggain")
             {
                 SetComparer(SortingMetric.AverageGain);
                 return;
             }
 
-            if (sortBy == "gainexp")
+            if (sortBy == "expgain")
             {
                 SetComparer(SortingMetric.ExpectedGain);
                 return;

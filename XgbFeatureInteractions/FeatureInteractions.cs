@@ -52,10 +52,11 @@ namespace XgbFeatureInteractions
         {
             foreach(KeyValuePair<string, FeatureInteraction> fi in interactions)
             {
-                if(!ContainsKey(fi.Key))
+                if (!ContainsKey(fi.Key))
                 {
                     Add(fi.Key, fi.Value);
-                } else
+                }
+                else
                 {
                     this[fi.Key].Gain += fi.Value.Gain;
                     this[fi.Key].Cover += fi.Value.Cover;
@@ -70,6 +71,15 @@ namespace XgbFeatureInteractions
                     this[fi.Key].SumLeafValuesRight += fi.Value.SumLeafValuesRight;
                     this[fi.Key].TreeIndex += fi.Value.TreeIndex;
                     this[fi.Key].AverageTreeIndex = this[fi.Key].TreeIndex / this[fi.Key].FScore;
+                    this[fi.Key].TreeDepth += fi.Value.TreeDepth;
+                    this[fi.Key].AverageTreeDepth = this[fi.Key].TreeDepth / this[fi.Key].FScore;
+
+                    //if (fi.Value.Depth == 0)
+                    //{
+                    //    this[fi.Key].SplitValueHistogram.Merge(fi.Value.SplitValueHistogram);
+
+                    //}
+                    this[fi.Key].SplitValueHistogram.Merge(fi.Value.SplitValueHistogram);
                 }
             }
         }
@@ -157,6 +167,7 @@ namespace XgbFeatureInteractions
                     ws.Column(13).Width = 19;
                     ws.Column(14).Width = 17;
                     ws.Column(15).Width = 19;
+                    ws.Column(16).Width = 19;
 
                     ws.Cells[1, 1].Value = "Interaction";
                     ws.Cells[1, 2].Value = "Gain";
@@ -173,6 +184,7 @@ namespace XgbFeatureInteractions
                     ws.Cells[1, 13].Value = "Expected Gain Rank";
                     ws.Cells[1, 14].Value = "Average Rank";
                     ws.Cells[1, 15].Value = "Average Tree Index";
+                    ws.Cells[1, 16].Value = "Average Tree Depth";
 
                     var gainSorted = interactions.OrderBy(x => -x.Gain).ToList();
                     var fScoreSorted = interactions.OrderBy(x => -x.FScore).ToList();
@@ -206,7 +218,8 @@ namespace XgbFeatureInteractions
                         rowValues.Add(averageGainSorted.FindIndex(x => x.Name == fi.Name) + 1); //12
                         rowValues.Add(expectedGainSorted.FindIndex(x => x.Name == fi.Name) + 1); //13
                         rowValues.Add(_formatNumber(rowValues.Skip(7).Average(x => Double.Parse(x.ToString())))); //14
-                        rowValues.Add(fi.AverageTreeIndex); //15
+                        rowValues.Add(_formatNumber(fi.AverageTreeIndex)); //15
+                        rowValues.Add(_formatNumber(fi.AverageTreeDepth)); //16
 
                         excelData.Add(rowValues.ToArray());
 
@@ -261,6 +274,48 @@ namespace XgbFeatureInteractions
                     ws.Cells["A2"].LoadFromArrays(excelData);
 
                 }
+
+                interactions = GetFeatureInteractionsOfDepth(0).Values.ToList();
+                if (interactions.Count > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine(String.Format("Writing split value histograms"));
+                    Console.ResetColor();
+
+                    interactions.Sort();
+
+                    var ws = pck.Workbook.Worksheets.Add(String.Format("Split Value Histograms"));
+
+                    ws.Row(1).Height = 20;
+                    ws.Row(1).Style.Font.Bold = true;
+                    ws.Row(1).Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    ws.Row(1).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                    for(int i = 0; i < interactions.Count; i++)
+                    {
+                        if(i == GlobalSettings.MaxHistograms)
+                        {
+                            break;
+                        }
+                        var fi = interactions[i];
+                        int c1 = i * 2 + 1;
+                        int c2 = c1 + 1;
+                        ws.Cells[1, c1,  1, c2].Merge = true;
+                        ws.Cells[1, c1 , 1, c2].Value = fi.Name;
+                        ws.Column(c1).Width = Math.Max(10, (fi.Name.Length + 4) / 2);
+                        ws.Column(c2).Width = Math.Max(10, (fi.Name.Length + 4) / 2);
+
+                        int row = 2;
+                        foreach(KeyValuePair<double,double> kvp in fi.SplitValueHistogram)
+                        {
+                            ws.Cells[row, c1].Value = kvp.Key;
+                            ws.Cells[row, c2].Value = kvp.Value;
+                            row++;
+                        }
+                    }
+                   
+                }
+
 
                 pck.Save();
                 Console.ForegroundColor = ConsoleColor.Green;

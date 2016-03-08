@@ -77,7 +77,7 @@ namespace XgbFeatureInteractions
             var pathProbabilityLeft = pathProbability * (((XgbTree)tree.Left).Data.Cover / tree.Data.Cover);
             var pathProbabilityRight = pathProbability * (((XgbTree)tree.Right).Data.Cover / tree.Data.Cover);
 
-            var fi = new FeatureInteraction(currentInteraction, currentGain, currentCover, pathProbability, _treeIndex, 1);
+            var fi = new FeatureInteraction(currentInteraction, currentGain, currentCover, pathProbability, depth, _treeIndex, 1);
 
             if (depth < _maxDeepening || _maxDeepening < 0)
             {
@@ -111,7 +111,11 @@ namespace XgbFeatureInteractions
                 tfi.AverageFScoreWeighted = tfi.FScoreWeighted / tfi.FScore;
                 tfi.AverageGain = tfi.Gain / tfi.FScore;
                 tfi.ExpectedGain += currentGain * pathProbability;
-
+                tfi.TreeDepth += depth;
+                tfi.AverageTreeDepth = tfi.TreeDepth / tfi.FScore;
+                tfi.TreeIndex += _treeIndex;
+                tfi.AverageTreeIndex = tfi.TreeIndex / tfi.FScore;
+                tfi.SplitValueHistogram.Merge(fi.SplitValueHistogram);
             }
 
             if (currentInteraction.Count - 1 == _maxInteractionDepth)

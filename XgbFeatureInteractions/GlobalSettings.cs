@@ -16,16 +16,17 @@ namespace XgbFeatureInteractions
         public static int MaxTrees { get; set; }
         public static int MaxDeepening { get; set; }
         public static string SortBy { get; set; }
+        public static int MaxHistograms { get; set; }
 
         static GlobalSettings() {
-
-             XgbModelFile = Settings.Default.XgbModelFile.Replace("\"", "");
-             OutputXlsxFile = Settings.Default.OutputXlsxFile.Replace("\"", "");
-             MaxInteractionDepth = Settings.Default.MaxInteractionDepth;
-             TopK = Settings.Default.TopK;
-             MaxTrees = Settings.Default.MaxTrees;
-             MaxDeepening = Settings.Default.MaxDeepening;
-             SortBy = Settings.Default.SortBy;
+            XgbModelFile = Settings.Default.XgbModelFile.Replace("\"", "");
+            OutputXlsxFile = Settings.Default.OutputXlsxFile.Replace("\"", "");
+            MaxInteractionDepth = Settings.Default.MaxInteractionDepth;
+            TopK = Settings.Default.TopK;
+            MaxTrees = Settings.Default.MaxTrees;
+            MaxDeepening = Settings.Default.MaxDeepening;
+            SortBy = Settings.Default.SortBy;
+            MaxHistograms = Settings.Default.MaxHistograms;
         }
 
     }

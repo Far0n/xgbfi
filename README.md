@@ -12,6 +12,11 @@ Xgbfi is a [XGBoost](https://github.com/dmlc/xgboost) model dump parser, which r
  * **Average Gain**: *Gain* divided by *FScore*
  * **Expected Gain**: Total gain of each feature or feature interaction weighted by the probability to gather the gain
  * **Average Tree Index**
+ * **Average Tree Depth**
+
+### Additional Features
+ * **Leaf Statistics**
+ * **Split Value Histograms**
  
 **Example:**
 
@@ -35,7 +40,7 @@ features: enumerable of feature names
 create_feature_map('xgb.fmap', features) 
 ```
 
-b) Dumping an [XGBoost](https://github.com/dmlc/xgboost)-model 
+b) Dumping a [XGBoost](https://github.com/dmlc/xgboost) model 
 ```python
 gbdt.dump_model('xgb.dump',fmap='xgb.fmap', with_stats=True)
 ```

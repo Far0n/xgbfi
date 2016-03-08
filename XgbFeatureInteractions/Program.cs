@@ -35,6 +35,7 @@ namespace XgbFeatureInteractions
             Console.WriteLine(String.Format("MaxTrees: {0}", GlobalSettings.MaxTrees));
             Console.WriteLine(String.Format("TopK: {0}", GlobalSettings.TopK));
             Console.WriteLine(String.Format("SortBy: {0}", FIScoreComparer.SortBy));
+            Console.WriteLine(String.Format("MaxHistograms: {0}", GlobalSettings.MaxHistograms));
             Console.WriteLine();
 
             if(args.Length == 0)
@@ -157,6 +158,14 @@ namespace XgbFeatureInteractions
             {
                 GlobalSettings.SortBy = m.Groups[1].Value;
             }
+            m = Regex.Match(cmds, @"-h\s([^\s]*)");
+            if (m.Success)
+            {
+                var h = m.Groups[1].Value;
+                var tmp = 0;
+                int.TryParse(h, out tmp);
+                GlobalSettings.MaxHistograms = tmp;
+            }
 
             return;
         }
@@ -171,8 +180,9 @@ namespace XgbFeatureInteractions
             Console.WriteLine("\t-g  Upper bound for interaction start deepening (zero deepening => interactions starting @root only)");
             Console.WriteLine("\t-t  Upper bound for trees to be parsed");
             Console.WriteLine("\t-k  Upper bound for exportet feature interactions per depth level");
-            Console.WriteLine("\t-s  Score metric to sort by (Gain, FScore, wFScore, wFScoreAvg, GainAvg, GainExp)");
+            Console.WriteLine("\t-s  Score metric to sort by (Gain, FScore, wFScore, AvgwFScore, AvgGain, ExpGain)");
             Console.WriteLine("\t-o  Xlsx file to be written");
+            Console.WriteLine("\t-h  Amounts of split value histograms");
         }
     }
 }
