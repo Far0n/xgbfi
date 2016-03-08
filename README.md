@@ -12,7 +12,9 @@ Xgbfi is a [XGBoost](https://github.com/dmlc/xgboost) model dump parser, which r
  * **Average Gain**: *Gain* divided by *FScore*
  * **Expected Gain**: Total gain of each feature or feature interaction weighted by the probability to gather the gain
 
+ 
 **Example:**
+
 ![](https://raw.githubusercontent.com/Far0n/xgbfi/master/doc/ScoresExample_small.png)
 
 ### Usage

@@ -68,6 +68,8 @@ namespace XgbFeatureInteractions
                     this[fi.Key].SumLeafCoversRight += fi.Value.SumLeafCoversRight;
                     this[fi.Key].SumLeafValuesLeft += fi.Value.SumLeafValuesLeft;
                     this[fi.Key].SumLeafValuesRight += fi.Value.SumLeafValuesRight;
+                    this[fi.Key].TreeIndex += fi.Value.TreeIndex;
+                    this[fi.Key].AverageTreeIndex = this[fi.Key].TreeIndex / this[fi.Key].FScore;
                 }
             }
         }
@@ -154,6 +156,7 @@ namespace XgbFeatureInteractions
                     ws.Column(12).Width = 18;
                     ws.Column(13).Width = 19;
                     ws.Column(14).Width = 17;
+                    ws.Column(15).Width = 19;
 
                     ws.Cells[1, 1].Value = "Interaction";
                     ws.Cells[1, 2].Value = "Gain";
@@ -169,6 +172,7 @@ namespace XgbFeatureInteractions
                     ws.Cells[1, 12].Value = "Avg Gain Rank";
                     ws.Cells[1, 13].Value = "Expected Gain Rank";
                     ws.Cells[1, 14].Value = "Average Rank";
+                    ws.Cells[1, 15].Value = "Average Tree Index";
 
                     var gainSorted = interactions.OrderBy(x => -x.Gain).ToList();
                     var fScoreSorted = interactions.OrderBy(x => -x.FScore).ToList();
@@ -202,6 +206,7 @@ namespace XgbFeatureInteractions
                         rowValues.Add(averageGainSorted.FindIndex(x => x.Name == fi.Name) + 1); //12
                         rowValues.Add(expectedGainSorted.FindIndex(x => x.Name == fi.Name) + 1); //13
                         rowValues.Add(_formatNumber(rowValues.Skip(7).Average(x => Double.Parse(x.ToString())))); //14
+                        rowValues.Add(fi.AverageTreeIndex); //15
 
                         excelData.Add(rowValues.ToArray());
 

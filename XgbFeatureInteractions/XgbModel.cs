@@ -14,6 +14,7 @@ namespace XgbFeatureInteractions
         private FeatureInteractions _treeFeatureInteractions { get; set; }
         private int _maxInteractionDepth { get; set; }
         private HashSet<string> _pathMemo { get; set; }
+        private double _treeIndex { get; set; }
         private int _maxDeepening { get; set; }
         public int NumTrees
         {
@@ -42,6 +43,7 @@ namespace XgbFeatureInteractions
 
                 _treeFeatureInteractions = new FeatureInteractions();
                 _pathMemo = new HashSet<string>();
+                _treeIndex = i;
                 CollectFeatureInteractions(XgbTrees[i], new HashSet<XgbTreeNode>() , currentGain: 0, currentCover: 0, pathProbability: 1, depth: 0, deepening: 0);
 
                 //double treeGain = _treeFeatureInteractions.GetFeatureInteractionsOfDepth(0).Sum(x => x.Value.Gain);
@@ -75,7 +77,7 @@ namespace XgbFeatureInteractions
             var pathProbabilityLeft = pathProbability * (((XgbTree)tree.Left).Data.Cover / tree.Data.Cover);
             var pathProbabilityRight = pathProbability * (((XgbTree)tree.Right).Data.Cover / tree.Data.Cover);
 
-            var fi = new FeatureInteraction(currentInteraction, currentGain, currentCover, pathProbability, 1);
+            var fi = new FeatureInteraction(currentInteraction, currentGain, currentCover, pathProbability, _treeIndex, 1);
 
             if (depth < _maxDeepening || _maxDeepening < 0)
             {
@@ -95,7 +97,6 @@ namespace XgbFeatureInteractions
             }
             else
             {    
-                // reoccurrence?
                 if(_pathMemo.Contains(path))
                 {
                     return;
