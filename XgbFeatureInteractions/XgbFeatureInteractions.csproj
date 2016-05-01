@@ -63,6 +63,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="GlobalStats.cs" />
+    <Compile Include="SplitValueHistogram.cs" />
     <Compile Include="XgbModel.cs" />
     <Compile Include="XgbModelParser.cs" />
     <Compile Include="XgbTree.cs" />

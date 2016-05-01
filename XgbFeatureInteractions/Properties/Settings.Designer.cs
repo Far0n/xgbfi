@@ -61,7 +61,16 @@ namespace XgbFeatureInteractions.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Gain")]
+        public string SortBy {
+            get {
+                return ((string)(this["SortBy"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
         public int MaxTrees {
             get {
                 return ((int)(this["MaxTrees"]));
@@ -70,7 +79,7 @@ namespace XgbFeatureInteractions.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int MaxInteractionDepth {
             get {
                 return ((int)(this["MaxInteractionDepth"]));
@@ -79,10 +88,10 @@ namespace XgbFeatureInteractions.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Gain")]
-        public string SortBy {
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int MaxHistograms {
             get {
-                return ((string)(this["SortBy"]));
+                return ((int)(this["MaxHistograms"]));
             }
         }
     }
