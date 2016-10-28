@@ -4,6 +4,9 @@ XGBoost Feature Interactions &amp; Importance
 ### What is Xgbfi?
 Xgbfi is a [XGBoost](https://github.com/dmlc/xgboost) model dump parser, which ranks features as well as feature interactions by different metrics. 
 
+### Siblings
+[Xgbfir](https://github.com/limexp/xgbfir) - Python porting
+
 ### The Metrics
  * **Gain**: Total gain of each feature or feature interaction
  * **FScore**: Amount of possible splits taken on a feature or feature interaction
